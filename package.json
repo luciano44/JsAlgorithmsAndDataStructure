@@ -1,0 +1,14 @@
+{
+  "name": "jsalgorithms",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "parcel": "^2.9.3"
+  },
+  "dependencies": {}
+}
