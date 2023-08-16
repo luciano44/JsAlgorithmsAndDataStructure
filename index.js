@@ -89,6 +89,7 @@ class LinkedList {
       this.tail = node
     }
     this.size++
+    return value
   }
 
   prepend(value) {
@@ -101,6 +102,7 @@ class LinkedList {
       this.head = node
     }
     this.size++
+    return value
   }
 
   print() {
@@ -134,13 +136,13 @@ class LinkedList {
   //   this.remove(0)
   // }
 
-  addQueue(value) {
-    this.insert(value, 0)
-  }
+  // addQueue(value) {
+  //   this.insert(value, 0)
+  // }
 
-  removeQueue() {
-    this.remove(this.size - 1)
-  }
+  // removeQueue() {
+  //   this.remove(this.size - 1)
+  // }
 }
 
 class DoublyLinkedList {
@@ -166,26 +168,108 @@ class DoublyLinkedList {
     return value
   }
 
+  append(value) {
+    const node = new Node(value)
+    if (!this.getSize()) {
+      this.head = node
+      this.tail = node
+    } else {
+      this.tail.next = node
+      node.prev = this.tail
+      this.tail = node
+    }
+
+    this.size++
+    return value
+  }
+
+  insert(value, index) {
+    if (index < 0 || index > this.size) return null
+    if (index === this.size) return this.append(value)
+    if (index === 0) return this.prepend(value)
+
+    const node = new Node(value)
+    let prev = null
+    let curr = this.head
+    for (let i = 0; i < index; i++) {
+      prev = curr
+      curr = curr.next
+    }
+
+    prev.next = node
+
+    node.prev = prev
+    node.next = curr
+
+    curr.prev = node
+
+    this.size++
+    // console.log({ prev: prev.value, curr: curr.value })
+    return value
+  }
+
+  remove(index) {
+    if (index < 0 || index > this.size - 1) return null
+
+    let prev
+    let curr
+    let next = this.head
+    for (let i = 0; i < index + 1; i++) {
+      prev = curr
+      curr = next
+      next = next.next
+    }
+
+    if (prev) {
+      prev.next = next ?? null
+    } else {
+      this.head = next
+    }
+
+    if (next) {
+      next.prev = prev ?? null
+    } else {
+      this.tail = prev
+    }
+
+    // console.log({
+    //   prev: prev,
+    //   curr: curr,
+    //   next: next,
+    // })
+    this.size--
+
+    if (this.getSize() === 0) {
+      this.head = null
+      this.tail = null
+    }
+
+    return curr.value
+  }
+
+  search(index) {
+    if (index < 0 || index > this.size - 1) return null
+
+    let curr = this.head
+    for (let i = 0; i < index; i++) {
+      curr = curr.next
+    }
+
+    return curr.value
+  }
+
   print() {
+    if (!this.getSize()) return "Empty List!!"
     let str = ""
     let curr = this.head
     for (let i = 0; i < this.size - 1; i++) {
-      console.log({
-        val: curr.value,
-        prev: curr.prev?.value,
-        next: curr.next?.value,
-      })
       str += `${curr.value} `
       curr = curr.next
     }
-    console.log({
-      val: curr.value,
-      prev: curr.prev?.value,
-      next: curr.next?.value,
-    })
+
     str += `${curr.value} `
 
-    console.log(str)
+    return str
   }
 
   getSize() {
@@ -199,10 +283,14 @@ class DoublyLinkedList {
 
 const doublyLinkedList = new DoublyLinkedList()
 
-doublyLinkedList.prepend(5)
-doublyLinkedList.prepend(4)
-doublyLinkedList.prepend(3)
-doublyLinkedList.prepend(2)
-doublyLinkedList.prepend(1)
+doublyLinkedList.append(3)
+doublyLinkedList.append(2)
+doublyLinkedList.append(1)
+doublyLinkedList.remove(0)
+// doublyLinkedList.remove(0)
+// doublyLinkedList.remove(0)
+doublyLinkedList.getHeadTail()
 
-doublyLinkedList.print()
+console.log(doublyLinkedList.print())
+
+module.exports = { LinkedList }
