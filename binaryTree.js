@@ -57,14 +57,6 @@ class BinarySearchTree {
       this.preOrder(root.left)
       this.preOrder(root.right)
     }
-    // if (this.isEmpty()) return console.log("The Tree is Empty!")
-    // console.log(root.value)
-    // if (root.left) {
-    //   this.preOrder(root.left)
-    // }
-    // if (root.right) {
-    //   this.preOrder(root.right)
-    // }
   }
 
   inOrder(root) {
@@ -73,14 +65,6 @@ class BinarySearchTree {
       console.log("inOrder", root.value)
       this.inOrder(root.right)
     }
-    // if (this.isEmpty()) return console.log("The Tree is Empty!")
-    // if (root.left) {
-    //   this.inOrder(root.left)
-    // }
-    // console.log(root.value)
-    // if (root.right) {
-    //   this.inOrder(root.right)
-    // }
   }
 
   postOrder(root) {
@@ -89,14 +73,6 @@ class BinarySearchTree {
       this.postOrder(root.right)
       console.log("postOrder", root.value)
     }
-    // if (this.isEmpty()) return console.log("The Tree is Empty!")
-    // if (root.left) {
-    //   this.postOrder(root.left)
-    // }
-    // if (root.right) {
-    //   this.postOrder(root.right)
-    // }
-    // console.log(root.value)
   }
 }
 
