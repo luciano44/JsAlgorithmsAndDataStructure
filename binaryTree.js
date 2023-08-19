@@ -11,61 +11,113 @@ class BinarySearchTree {
     this.root = null
   }
 
-  isEmpty() {
-    return this.root === null
-  }
-
   insert(value) {
     const node = new Node(value)
-    if (this.isEmpty()) {
-      this.root = node
-    } else {
-      this.insertNode(this.root, node)
-    }
+    if (this.isEmpty()) return (this.root = node)
+    return this.insertNode(this.root, node)
   }
 
   insertNode(root, node) {
+    // if (node.value === root.value)
+    //   return console.log(root.value, "<- VALUE ALREADY EXISTS")
     if (node.value < root.value) {
       if (!root.left) {
-        root.left = node
+        return (root.left = node)
       } else {
-        this.insertNode(root.left, node)
+        return this.insertNode(root.left, node)
       }
     } else {
       if (!root.right) {
-        root.right = node
+        return (root.right = node)
       } else {
-        this.insertNode(root.right, node)
+        return this.insertNode(root.right, node)
       }
     }
   }
 
   search(value, root = this.root) {
-    if (this.isEmpty()) return false
-
-    if (value === root.value) return true
+    if (this.isEmpty()) return null
+    if (value === root.value) return root
     if (value < root.value) {
-      if (root.left) {
-        return this.search(value, root.left)
-      } else {
-        return false
-      }
+      if (!root.left) return null
+      return this.search(value, root.left)
     } else {
-      if (root.right) {
-        return this.search(value, root.right)
-      } else {
-        return false
-      }
+      if (!root.right) return null
+      return this.search(value, root.right)
     }
+  }
+
+  isEmpty() {
+    return this.root === null
+  }
+
+  preOrder(root) {
+    if (root) {
+      console.log("preOrder", root.value)
+      this.preOrder(root.left)
+      this.preOrder(root.right)
+    }
+    // if (this.isEmpty()) return console.log("The Tree is Empty!")
+    // console.log(root.value)
+    // if (root.left) {
+    //   this.preOrder(root.left)
+    // }
+    // if (root.right) {
+    //   this.preOrder(root.right)
+    // }
+  }
+
+  inOrder(root) {
+    if (root) {
+      this.inOrder(root.left)
+      console.log("inOrder", root.value)
+      this.inOrder(root.right)
+    }
+    // if (this.isEmpty()) return console.log("The Tree is Empty!")
+    // if (root.left) {
+    //   this.inOrder(root.left)
+    // }
+    // console.log(root.value)
+    // if (root.right) {
+    //   this.inOrder(root.right)
+    // }
+  }
+
+  postOrder(root) {
+    if (root) {
+      this.postOrder(root.left)
+      this.postOrder(root.right)
+      console.log("postOrder", root.value)
+    }
+    // if (this.isEmpty()) return console.log("The Tree is Empty!")
+    // if (root.left) {
+    //   this.postOrder(root.left)
+    // }
+    // if (root.right) {
+    //   this.postOrder(root.right)
+    // }
+    // console.log(root.value)
   }
 }
 
 const bst = new BinarySearchTree()
 
-console.log("Is it empty?", bst.isEmpty())
+// console.log("Is it empty?", bst.isEmpty())
 
 bst.insert(10)
 bst.insert(5)
 bst.insert(15)
+bst.insert(3)
+bst.insert(8)
+bst.insert(17)
+bst.insert(13)
 
-console.log(bst.search(10))
+// console.log(bst.search(10))
+
+console.log(" ")
+bst.preOrder(bst.root)
+console.log(" ")
+bst.inOrder(bst.root)
+console.log(" ")
+bst.postOrder(bst.root)
+console.log(" ")
