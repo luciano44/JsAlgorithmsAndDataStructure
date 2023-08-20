@@ -51,6 +51,14 @@ class BinarySearchTree {
     return this.root === null
   }
 
+  preOrderX(root) {
+    if (root) {
+      console.log("preOrder", root.value)
+      this.preOrder(root.left)
+      this.preOrder(root.right)
+    }
+  }
+
   preOrder(root) {
     if (root) {
       console.log("preOrder", root.value)
@@ -65,6 +73,17 @@ class BinarySearchTree {
       console.log("inOrder", root.value)
       this.inOrder(root.right)
     }
+  }
+
+  breadthFirstSearch() {
+    const queue = [...arguments]
+    if (!this.root || queue.length === 0) return
+
+    console.log(queue[0].value)
+    if (queue[0].left) queue.push(queue[0].left)
+    if (queue[0].right) queue.push(queue[0].right)
+    queue.shift()
+    this.breadthFirstSearch(...queue)
   }
 
   postOrder(root) {
@@ -88,12 +107,4 @@ bst.insert(8)
 bst.insert(17)
 bst.insert(13)
 
-// console.log(bst.search(10))
-
-console.log(" ")
-bst.preOrder(bst.root)
-console.log(" ")
-bst.inOrder(bst.root)
-console.log(" ")
-bst.postOrder(bst.root)
-console.log(" ")
+bst.breadthFirstSearch(bst.root)
