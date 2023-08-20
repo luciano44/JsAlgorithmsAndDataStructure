@@ -99,13 +99,33 @@ class BinarySearchTree {
 
     console.log({ min: min.value, max: max.value })
   }
+
+  min() {
+    let min = this.root
+
+    while (min.left) {
+      min = min.left
+    }
+
+    console.log(min)
+  }
+
+  max() {
+    let max = this.root
+
+    while (max.right) {
+      max = max.right
+    }
+
+    console.log(max)
+  }
 }
 
 const bst = new BinarySearchTree()
 
 // console.log("Is it empty?", bst.isEmpty())
 
-bst.insert(1)
+bst.insert(10)
 bst.insert(5)
 bst.insert(15)
 bst.insert(3)
@@ -113,4 +133,5 @@ bst.insert(8)
 bst.insert(17)
 bst.insert(13)
 
-bst.minMax()
+bst.min()
+bst.max()
