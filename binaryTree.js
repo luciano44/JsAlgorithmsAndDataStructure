@@ -51,14 +51,6 @@ class BinarySearchTree {
     return this.root === null
   }
 
-  preOrderX(root) {
-    if (root) {
-      console.log("preOrder", root.value)
-      this.preOrder(root.left)
-      this.preOrder(root.right)
-    }
-  }
-
   preOrder(root) {
     if (root) {
       console.log("preOrder", root.value)
@@ -75,9 +67,17 @@ class BinarySearchTree {
     }
   }
 
+  postOrder(root) {
+    if (root) {
+      this.postOrder(root.left)
+      this.postOrder(root.right)
+      console.log("postOrder", root.value)
+    }
+  }
+
   breadthFirstSearch() {
     const queue = [...arguments]
-    if (!this.root || queue.length === 0) return
+    if (this.isEmpty() || queue.length === 0) return
 
     console.log("BFS", queue[0].value)
     if (queue[0].left) queue.push(queue[0].left)
@@ -86,12 +86,18 @@ class BinarySearchTree {
     this.breadthFirstSearch(...queue)
   }
 
-  postOrder(root) {
-    if (root) {
-      this.postOrder(root.left)
-      this.postOrder(root.right)
-      console.log("postOrder", root.value)
+  minMax() {
+    if (this.isEmpty()) return
+
+    let min = this.root
+    let max = this.root
+
+    while (min.left || max.right) {
+      min = min.left || min
+      max = max.right || max
     }
+
+    console.log({ min: min.value, max: max.value })
   }
 }
 
@@ -99,7 +105,7 @@ const bst = new BinarySearchTree()
 
 // console.log("Is it empty?", bst.isEmpty())
 
-bst.insert(10)
+bst.insert(1)
 bst.insert(5)
 bst.insert(15)
 bst.insert(3)
@@ -107,4 +113,4 @@ bst.insert(8)
 bst.insert(17)
 bst.insert(13)
 
-bst.breadthFirstSearch(bst.root)
+bst.minMax()
