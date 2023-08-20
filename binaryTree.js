@@ -79,7 +79,7 @@ class BinarySearchTree {
     const queue = [...arguments]
     if (!this.root || queue.length === 0) return
 
-    console.log(queue[0].value)
+    console.log("BFS", queue[0].value)
     if (queue[0].left) queue.push(queue[0].left)
     if (queue[0].right) queue.push(queue[0].right)
     queue.shift()
