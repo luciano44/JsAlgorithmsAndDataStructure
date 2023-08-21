@@ -52,6 +52,7 @@ class BinarySearchTree {
   }
 
   preOrder(root) {
+    if (this.isEmpty()) return "THE TREE IS EMPTY!"
     if (root) {
       console.log("preOrder", root.value)
       this.preOrder(root.left)
@@ -60,6 +61,7 @@ class BinarySearchTree {
   }
 
   inOrder(root) {
+    if (this.isEmpty()) return "THE TREE IS EMPTY!"
     if (root) {
       this.inOrder(root.left)
       console.log("inOrder", root.value)
@@ -68,6 +70,7 @@ class BinarySearchTree {
   }
 
   postOrder(root) {
+    if (this.isEmpty()) return "THE TREE IS EMPTY!"
     if (root) {
       this.postOrder(root.left)
       this.postOrder(root.right)
@@ -119,6 +122,62 @@ class BinarySearchTree {
 
     console.log(max)
   }
+
+  remove(value) {
+    if (this.isEmpty()) return
+
+    let node = this.root
+    let deletedNode
+    let childNodesToReinsert = []
+
+    if (node.value === value) {
+      if (node.left) {
+        this.root = node.left
+        if (node.right) this.insertNode(this.root, node.right)
+        return null
+      } else {
+        if (node.right) {
+          this.root = node.right
+          if (node.left) this.insertNode(this.root, node.left)
+          return null
+        }
+      }
+
+      return (this.root = null)
+    }
+
+    while (node && !deletedNode) {
+      if (node.left?.value === value) {
+        deletedNode = node.left
+        node.left = undefined
+        node = null
+      }
+      if (!deletedNode && node.right?.value === value) {
+        deletedNode = node.right
+        node.right = undefined
+        node = null
+      }
+      if (!deletedNode && value < node.value) {
+        node = node?.left
+      } else {
+        node = node?.right
+      }
+    }
+
+    if (deletedNode?.left) childNodesToReinsert.push(deletedNode.left)
+    if (deletedNode?.right) childNodesToReinsert.push(deletedNode.right)
+
+    if (childNodesToReinsert.length > 0) {
+      childNodesToReinsert.forEach((node) => {
+        this.insertNode(this.root, node)
+      })
+    }
+    // console.log("preOrder", root.value)
+    // this.preOrder(root.left)
+    // this.preOrder(root.right)
+
+    // return deletedNode
+  }
 }
 
 const bst = new BinarySearchTree()
@@ -133,5 +192,10 @@ bst.insert(8)
 bst.insert(17)
 bst.insert(13)
 
-bst.min()
-bst.max()
+// console.log(bst.remove(10))
+// console.log(bst.remove(15))
+// bst.remove(10)
+
+// bst.preOrder(bst.root)
+// bst.inOrder(bst.root)
+// bst.postOrder(bst.root)
