@@ -103,27 +103,63 @@ class BinarySearchTree {
     console.log({ min: min.value, max: max.value })
   }
 
-  min() {
-    let min = this.root
-
-    while (min.left) {
-      min = min.left
+  min(root) {
+    if (!root.left) {
+      return root.value
+    } else {
+      return this.min(root.left)
     }
-
-    console.log(min)
   }
 
-  max() {
-    let max = this.root
-
-    while (max.right) {
-      max = max.right
+  max(root) {
+    if (!root.right) {
+      return root.value
+    } else {
+      return this.max(root.right)
     }
-
-    console.log(max)
   }
 
-  remove(value) {
+  levelOrder() {
+    const queue = []
+    queue.push(this.root)
+    while (queue.length) {
+      let curr = queue.shift()
+      console.log(curr.value)
+      if (curr.left) {
+        queue.push(curr.left)
+      }
+      if (curr.right) {
+        queue.push(curr.right)
+      }
+    }
+  }
+
+  delete(value) {
+    this.root = this.deleteNode(this.root, value)
+  }
+
+  deleteNode(root, value) {
+    if (root === null) return root
+    if (value < root.value) {
+      root.left = this.deleteNode(root.left, value)
+    } else if (value > root.value) {
+      root.right = this.deleteNode(root.right, value)
+    } else {
+      if (!root.left && !root.right) {
+        return null
+      }
+      if (!root.left) {
+        return root.right
+      } else if (!root.right) {
+        return root.left
+      }
+      root.value = this.min(root.right)
+      root.right = this.deleteNode(root.right, root.value)
+    }
+    return root
+  }
+
+  myRemove(value) {
     if (this.isEmpty()) return
 
     let node = this.root
@@ -188,14 +224,8 @@ bst.insert(10)
 bst.insert(5)
 bst.insert(15)
 bst.insert(3)
-bst.insert(8)
-bst.insert(17)
-bst.insert(13)
 
-// console.log(bst.remove(10))
-// console.log(bst.remove(15))
-// bst.remove(10)
-
-// bst.preOrder(bst.root)
-// bst.inOrder(bst.root)
-// bst.postOrder(bst.root)
+bst.levelOrder()
+console.log("--------------")
+bst.delete(10)
+bst.levelOrder()
